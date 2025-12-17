@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "server",
+      name: "habib-server",
       script: "./dist/server.js",
       watch: false,
       env: {
@@ -9,7 +9,7 @@ module.exports = {
       },
     },
     {
-      name: "email-worker",
+      name: "habib-email-worker",
       script: "./dist/workers/email.worker.js",
       watch: false,
       env: {
