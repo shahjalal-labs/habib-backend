@@ -31,7 +31,7 @@ app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 app.get("/", (req: Request, res: Response) => {
   res.send({
-    Message: "🎉 Welcome FremanzFly Backend",
+    Message: "🎉 Welcome habib Backend",
   });
 });
 
