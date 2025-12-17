@@ -1,0 +1,268 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  firstName       String?
+  lastName        String?
+  email           String            @unique
+  appleId         String?
+  password        String
+  phone           String?
+  address         String?
+  proffesion      String?
+  city            String?
+  state           String?
+  country         String?
+  zipCode         String?
+  fcmToken        String?
+  profileImage    String?           @default("https://i.ibb.co.com/nrs3FjM/images.png")
+  customerId      String?
+  role            UserRole
+  status          UserStatus        @default(Active)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  order           order[]
+  shippingAddress shippingAddress[]
+  CouponUser      CouponUser[]
+  Review          Review[]
+
+  @@map("users")
+}
+
+model PendingUser {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  email     String    @unique
+  password  String
+  phone     String?
+  address   String?
+  city      String?
+  role      UserRole? @default(User)
+  state     String?
+  country   String?
+  otpCode   String
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  @@map("pendingUsers")
+}
+
+model Otp {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  otpCode   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("otps")
+}
+
+enum UserStatus {
+  Active
+  Blocked
+  Deleted
+}
+
+enum UserRole {
+  Admin
+  User
+}
+
+model shippingAddress {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
+  fullName  String
+  email     String
+  phone     String
+  address   String
+  city      String
+  state     String
+  country   String
+  zipCode   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     order[]
+
+  @@map("shippingAddresses")
+}
+
+model product {
+  id                     String         @id @default(auto()) @map("_id") @db.ObjectId
+  name                   String
+  images                 String[]
+  description            String
+  price                  Float
+  brand                  String
+  quantity               Int
+  availability           availability   @default(InStock)
+  productCategory        String
+  DescriptionIngredients String?
+  Dosage                 String?
+  CautionWarning         String?
+  ProductLabel           String?
+  rating                 Float          @default(0)
+  reviews                Review[]
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  orderProduct           orderProduct[]
+
+  @@map("products")
+}
+
+enum availability {
+  InStock
+  OutOfStock
+  PreOrder
+  UpComming
+}
+
+model productBrand {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("productBrands")
+}
+
+model productCategory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("productCategories")
+}
+
+model order {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  orderId           String           @unique
+  user              User?            @relation(fields: [userId], references: [id])
+  userId            String?          @db.ObjectId
+  products          orderProduct[]
+  totalAmount       Float
+  isPaid            Boolean?
+  status            OrderStatus      @default(Pending)
+  cancelReason      String?
+  shippingAddressId String?          @db.ObjectId
+  shippingAddress   shippingAddress? @relation(fields: [shippingAddressId], references: [id])
+  paymentMethodId   String?
+  paymentIntentId   String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@map("orders")
+}
+
+model orderProduct {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  order     order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.ObjectId
+  product   product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("orderProducts")
+}
+
+enum OrderStatus {
+  Pending
+  Processed
+  Shipped
+  InRoute
+  Delivered
+  Cancelled
+}
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating    Float
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+  userId    String?  @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@map("reviews")
+}
+
+model Coupon {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  code          String       @unique
+  discountType  DiscountType
+  discountValue Float
+  status        CouponStatus @default(Active)
+  expireDate    DateTime
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  couponUsers   CouponUser[]
+
+  @@map("coupons")
+}
+
+enum DiscountType {
+  Percentage
+  Flat
+}
+
+model CouponUser {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String   @db.ObjectId
+  coupon   Coupon   @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  couponId String   @db.ObjectId
+  message  String?
+  addedAt  DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, couponId]) // one coupon per user
+  @@map("couponUsers")
+}
+
+enum CouponStatus {
+  Active
+  Expired
+  Inactive
+}
+
+model contact {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  email     String
+  message   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  receiverId String?  @db.ObjectId
+  senderId   String?  @db.ObjectId
+  title      String?
+  content    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("notifications")
+}
