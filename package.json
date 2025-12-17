@@ -1,5 +1,5 @@
 {
-  "name": "fremanzfly-backend",
+  "name": "habib-backend",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "keywords": [],
   "author": "Roton",
   "license": "ISC",
-  "description": "fremanzfly-backend",
+  "description": "habib-backend",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
