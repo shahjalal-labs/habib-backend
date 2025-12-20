@@ -14,11 +14,10 @@ export const createProductSchema = z.object({
   productCategory: z.string(),
   availablity : z.enum(['InStock', 'OutOfStock', 'PreOrder', 'UpComming']).optional(),
   brand : z.string().optional(),
-  shortDescription: z.string().optional(),
-  longDescription: z.string().optional(),
-  technicalSpecification: z.any().optional(),
-  physicalSpecification: z.any().optional(),
-  warrantyInformation: z.any().optional(),
+  DescriptionIngredients: z.string().optional(),
+  Dosage: z.string().optional(),
+  CautionWarning: z.any().optional(),
+  ProductLabel: z.any().optional(),
 });
 export const ProductSchemaValidation = {
 createProductSchema,
