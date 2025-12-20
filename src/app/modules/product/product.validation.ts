@@ -8,7 +8,6 @@ export const productCategorySchema = z.object({
 // Product Schema
 export const createProductSchema = z.object({
   name: z.string().min(1, "Product name is required"),
-  description: z.string(),
   price: z.number().nonnegative("Price must be positive"),
   quantity: z.number().int().nonnegative().optional(),
   productCategory: z.string(),
@@ -19,6 +18,8 @@ export const createProductSchema = z.object({
   CautionWarning: z.any().optional(),
   ProductLabel: z.any().optional(),
 });
+
+
 export const ProductSchemaValidation = {
 createProductSchema,
 productCategorySchema

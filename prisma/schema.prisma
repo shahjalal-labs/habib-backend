@@ -100,7 +100,6 @@ model product {
   id                     String         @id @default(auto()) @map("_id") @db.ObjectId
   name                   String
   images                 String[]
-  description            String
   price                  Float
   brand                  String
   quantity               Int
