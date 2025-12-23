@@ -6,11 +6,13 @@ import { couponHtml, forgotPasswordHtml, otpHtml } from "../app/constant";
 new Worker(
   "email",
   async (job) => {
+    console.log("1")
     const { email, fullName, otp } = job.data;
     let subject = "";
     let html = "";
 
     if (job.name === "sendOtp") {
+      console.log("2")
       subject = "Account verification";
       html = otpHtml(fullName, otp);
     } else if (job.name === "forgotPasswordOtp") {
@@ -42,10 +44,11 @@ new Worker(
     }
 
     try {
+      console.log("3")
       await sendEmail(email, subject, html);
       console.log(`✅ Email sent to ${email} for job: ${job.name}`);
     } catch (err) {
-      console.error("Failed to send email:", err);
+      console.log("Failed to send email:", err);
     }
   },
   { connection: connection }
