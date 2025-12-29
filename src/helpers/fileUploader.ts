@@ -1,22 +1,5 @@
 import multer from "multer";
 
-//----------------- If store the local --------------// 
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, path.join(process.cwd(), "uploads"));
-//   },
-//   filename: function (req, file, cb) {
-//     // Add a timestamp to the original filename
-//     const timestamp = Date.now();
-//     const ext = path.extname(file.originalname);
-//     const baseName = path.basename(file.originalname, ext);
-
-//     const newFilename = `${timestamp}-${baseName}${ext}`;
-//     cb(null, newFilename);
-//   },
-// });
-
 // --------------  Store in local -------------------//
 
 const storage = multer.memoryStorage();

@@ -47,5 +47,4 @@ router.post(
   UserControllers.createStaffUser
 );
 
-
 export const userRoutes = router;

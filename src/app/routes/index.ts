@@ -8,6 +8,8 @@ import { orderPaymentRoutes } from "../modules/orderpayment/orderPayment.routes"
 import { cuoponRoutes } from "../modules/cuopon/cuopon.routes";
 import { contactRoutes } from "../modules/contact/contact.routes";
 import { notificationsRoute } from "../modules/notifications/notification.route";
+import { CountryLocationsRoutes } from "../modules/countrylocations/CountryLocations.routes";
+import { uploaderRoutes } from "../modules/uploader/uploader.routes";
 
 const router = express.Router();
 
@@ -47,6 +49,14 @@ const moduleRoutes = [
   {
     path: "/notifications",
     route: notificationsRoute,
+  },
+  {
+    path: "/country-locations",
+    route: CountryLocationsRoutes,
+  },
+  {
+    path: "/uploader",
+    route: uploaderRoutes,
   },
 ];
 

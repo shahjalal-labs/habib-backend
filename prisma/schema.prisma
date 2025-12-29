@@ -276,3 +276,48 @@ model Notification {
 
   @@map("notifications")
 }
+
+//** Location Models **//
+model Country {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  address     String?
+  phone       String?
+  email       String?
+  gallary     String[]
+  coverImage  String?
+
+  CountrySectionInfo CountrySectionInfo[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("countries")
+}
+
+model CountrySectionInfo {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  countryId       String?           @db.ObjectId
+  title           String
+  CountryCardInfo CountryCardInfo[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Country         Country?          @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@map("countrySectionInfos")
+}
+
+model CountryCardInfo {
+  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
+  countryId            String?             @db.ObjectId
+  icon                 String
+  title                String
+  description          String
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  CountrySectionInfo   CountrySectionInfo? @relation(fields: [countrySectionInfoId], references: [id], onDelete: Cascade)
+  countrySectionInfoId String?             @db.ObjectId
+
+  @@map("countryCardInfos")
+}

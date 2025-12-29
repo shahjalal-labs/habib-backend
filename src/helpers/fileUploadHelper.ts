@@ -36,6 +36,7 @@ const uploadMultiple = upload.fields([
   { name: "mediaUrl", maxCount: 1 },
   { name: "documentUrls", maxCount: 5 },
   { name: "productImages", maxCount: 5 },
+  { name: "gallery", maxCount: 15 },
 ]);
 
 export const fileUploader = {
