@@ -13,12 +13,12 @@ reviewRouter.post(
   validateRequest(reviewValidation.createReviewSchema),
   reviewController.createReview
 );
-reviewRouter.get("/", auth(UserRole.Admin), reviewController.getAllReviews);
+reviewRouter.get("/", auth(UserRole.Admin, UserRole.Staff), reviewController.getAllReviews);
 reviewRouter.get("/:id", reviewController.getReviewById);
 reviewRouter.patch("/:id", auth(), reviewController.updateReview);
 reviewRouter.delete(
   "/:id",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   reviewController.deleteReview
 );
 

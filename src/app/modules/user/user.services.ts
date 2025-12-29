@@ -357,6 +357,31 @@ const adminOverview = async () => {
   // };
 };
 
+
+const createStaffUser = async (payload: User) => {
+  const existingUser = await prisma.user.findFirst({
+    where: { email: payload.email },
+  });
+  if(existingUser){
+    throw new ApiError(400, "User with this email already exists");
+  }
+
+  const hashedPassword = await bcrypt.hash(payload.password as string, 10);
+
+  const staffUser = await prisma.user.create({
+    data: {
+      firstName: payload.firstName ?? "",
+      lastName: payload.lastName ?? "",
+      email: payload.email,
+      password: hashedPassword,
+      role : UserRole.Staff,
+      accessiblePages : payload.accessiblePages ?? [],
+    }
+  })
+
+  return staffUser;
+}
+
 export const userService = {
   createUserIntoDB,
   createPendingUserIntoDB,
@@ -367,4 +392,5 @@ export const userService = {
   resendVerifyOTP,
   adminOverview,
   deleteUser,
+  createStaffUser
 };

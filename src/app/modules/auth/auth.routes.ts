@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post("/login", authController.loginUser);
 router.post("/admin-login", authController.adminLogin);
+router.post("/staff-login", authController.staffLogin);
 router.post("/social/login", authController.authLogin);
 router.get("/profile", auth(), authController.getProfile);
 router.post("/send-otp", authController.sendForgotPasswordOtp);

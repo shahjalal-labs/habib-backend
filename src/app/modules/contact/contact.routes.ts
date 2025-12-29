@@ -12,8 +12,8 @@ router.post(
   validateRequest(createContactSchema),
   contactControllers.createContact
 );
-router.get("/", auth(UserRole.Admin), contactControllers.getAllContacts);
-router.get("/:id", auth(UserRole.Admin), contactControllers.getContactById);
+router.get("/", auth(UserRole.Admin, UserRole.Staff), contactControllers.getAllContacts);
+router.get("/:id", auth(UserRole.Admin, UserRole.Staff), contactControllers.getContactById);
 router.patch("/:id", contactControllers.updateContact);
 router.delete("/:id", contactControllers.deleteContact);
 

@@ -11,7 +11,7 @@ const router = express.Router();
 // --------- Product Category Routes --------- //
 router.post(
   "/categories",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   validateRequest(ProductSchemaValidation.productCategorySchema),
   productControllers.createProductCategory
 );

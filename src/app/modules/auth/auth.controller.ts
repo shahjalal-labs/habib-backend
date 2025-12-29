@@ -21,6 +21,15 @@ const adminLogin = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const staffLogin = catchAsync(async (req, res) => {
+  const result = await authService.staffLogin(req.body);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Staff successfully logged in",
+    data: result,
+  });
+});
 
 const authLogin = catchAsync(async (req, res) => {
   const result = await authService.authLoginIntoDB(req.body);
@@ -114,5 +123,6 @@ export const authController = {
   resetPassword,
   authLogin,
   changePassword,
-  deleteAccount
+  deleteAccount,
+  staffLogin
 };

@@ -24,6 +24,7 @@ model User {
   fcmToken        String?
   profileImage    String?           @default("https://i.ibb.co.com/nrs3FjM/images.png")
   customerId      String?
+  accessiblePages AccessiblePages[]
   role            UserRole
   status          UserStatus        @default(Active)
   createdAt       DateTime          @default(now())
@@ -34,6 +35,15 @@ model User {
   Review          Review[]
 
   @@map("users")
+}
+
+enum AccessiblePages {
+  Dashboard
+  OrderManagement
+  ProductManagement
+  CategoriesManagement
+  UsersManagement
+  CouponsManagement
 }
 
 model PendingUser {
@@ -75,6 +85,7 @@ enum UserStatus {
 enum UserRole {
   Admin
   User
+  Staff
 }
 
 model shippingAddress {

@@ -101,6 +101,16 @@ const adminOverview = catchAsync(async (req, res) => {
   });
 });
 
+const createStaffUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await userService.createStaffUser(req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: 201,
+    message: "Staff User created successfully",
+    data: result,
+  });
+})
+
 
 export const UserControllers = {
   createUser,
@@ -112,4 +122,5 @@ export const UserControllers = {
   deleteUser,
   resendOTP,
   adminOverview,
+  createStaffUser
 };

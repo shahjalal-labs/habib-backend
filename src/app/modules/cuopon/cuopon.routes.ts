@@ -9,19 +9,19 @@ const router = express.Router();
 
 router.post(
   "/",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   validateRequest(CuoponSchemaValidation.createCuoponSchema),
   cuoponControllers.createCuopon
 );
-router.get("/", auth(UserRole.Admin), cuoponControllers.getAllCuopons);
+router.get("/", auth(UserRole.Admin, UserRole.Staff), cuoponControllers.getAllCuopons);
 router.post(
   "/send-user",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   validateRequest(CuoponSchemaValidation.sendCuoponSchema),
   cuoponControllers.sendCuoponToUser
 );
-router.get("/:id", auth(UserRole.Admin), cuoponControllers.getCuoponById);
-router.patch("/:id", auth(UserRole.Admin), cuoponControllers.updateCuopon);
-router.delete("/:id", auth(UserRole.Admin), cuoponControllers.deleteCuopon);
+router.get("/:id", auth(UserRole.Admin, UserRole.Staff), cuoponControllers.getCuoponById);
+router.patch("/:id", auth(UserRole.Admin, UserRole.Staff), cuoponControllers.updateCuopon);
+router.delete("/:id", auth(UserRole.Admin, UserRole.Staff), cuoponControllers.deleteCuopon);
 
 export const cuoponRoutes = router;

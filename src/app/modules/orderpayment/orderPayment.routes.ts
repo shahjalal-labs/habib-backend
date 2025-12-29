@@ -34,7 +34,7 @@ router.post(
 );
 router.get(
   "/",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   orderPaymentControllers.getAllOrderPayments
 );
 router.get(
@@ -44,17 +44,17 @@ router.get(
 );
 router.get(
   "/payment-history",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   orderPaymentControllers.getPaymentHistory
 );
 router.get(
   "/admin-overview",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   orderPaymentControllers.adminOverViewData
 );
 router.get(
   "/admin-overview/users",
-  auth(UserRole.Admin),
+  auth(UserRole.Admin, UserRole.Staff),
   orderPaymentControllers.getUserDataForAdminOverView
 );
 router.get("/best-selling", productControllers.bestSelling);
