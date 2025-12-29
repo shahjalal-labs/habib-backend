@@ -306,6 +306,9 @@ const updateUser = async (
   if (file) {
     profileImage = await uploadInSpace(file, "users/profileImage");
   }
+  if(payload.password){
+    payload.password = await bcrypt.hash(payload.password as string, 10);
+  }
 
   await prisma.user.update({
     where: { id: userId },
