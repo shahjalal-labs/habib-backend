@@ -13,7 +13,7 @@ const sendEmail = async (
       pass: config.emailSender.app_pass,
     });
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: "smtp.office365.com",
       port: 587,
       secure: false, // TLS
       auth: {
