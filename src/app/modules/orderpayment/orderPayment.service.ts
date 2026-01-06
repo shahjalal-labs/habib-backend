@@ -235,7 +235,7 @@ const createOrderWithPayment = async (data: any, user: JwtPayload) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(finalTotal * 100), // ⚠️ use finalTotal instead of totalAmount
       currency: "usd",
-      customer: customer.id, 
+      customer: customer.id,
       payment_method: data.paymentMethodId,
       confirm: true,
       automatic_payment_methods: {
@@ -487,6 +487,7 @@ const getAllOrderPayments = async (query: any) => {
           },
         },
       },
+      shippingAddress: true,
     })
     .paginate()
     .execute();
@@ -1034,6 +1035,15 @@ const getUserDataForAdminOverView = async (
   };
 };
 
+const deletePaymentHistory = async (id: string) => {
+  if (id) {
+    await prisma.order.delete({
+      where: { id },
+    });
+  }
+  return;
+};
+
 export const orderPaymentServices = {
   createOrderWithOutPayment,
   getAllOrderPayments,
@@ -1047,4 +1057,5 @@ export const orderPaymentServices = {
   getMyOrderFromDB,
   adminOverViewData,
   getUserDataForAdminOverView,
+  deletePaymentHistory,
 };

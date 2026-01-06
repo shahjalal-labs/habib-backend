@@ -145,6 +145,14 @@ const deleteOrderPayment = catchAsync(async (req: Request, res: Response) => {
     message: "orderPayment has been deleted successfully",
   });
 });
+const deletePaymentHistory = catchAsync(async (req: Request, res: Response) => {
+  await orderPaymentServices.deletePaymentHistory(req.params.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "payment history has been deleted successfully",
+  });
+});
 
 export const orderPaymentControllers = {
   createOrderWithOutPayment,
@@ -158,5 +166,6 @@ export const orderPaymentControllers = {
   calculateDiscount,
   getMyOrderFromDB,
   adminOverViewData,
-  getUserDataForAdminOverView
+  getUserDataForAdminOverView,
+  deletePaymentHistory
 };

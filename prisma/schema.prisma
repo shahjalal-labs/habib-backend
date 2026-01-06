@@ -41,9 +41,11 @@ enum AccessiblePages {
   Dashboard
   OrderManagement
   ProductManagement
-  CategoriesManagement
   UsersManagement
-  CouponsManagement
+  PaymentManagement
+  StaffManagement
+  LocationManagement
+  Settings
 }
 
 model PendingUser {

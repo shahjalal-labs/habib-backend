@@ -47,6 +47,8 @@ router.get(
   auth(UserRole.Admin, UserRole.Staff),
   orderPaymentControllers.getPaymentHistory
 );
+router.delete("/delete-payment-history/:id", auth(UserRole.Admin , UserRole.Staff), orderPaymentControllers.deletePaymentHistory);
+
 router.get(
   "/admin-overview",
   auth(UserRole.Admin, UserRole.Staff),
