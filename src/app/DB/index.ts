@@ -6,7 +6,7 @@ import prisma from "../../shared/prisma";
 const superAdminData  = {
   firstName: "Super",
   lastName : "Admin",
-  email: "admin@gmail.com",
+  email: "support@azmabiomed.com",
   password: config.super_admin_password!,
   role: UserRole.Admin,
 };

@@ -4,18 +4,19 @@ import path from "path";
 
 
 // DO_SPACE_ENDPOINT="https://nyc3.digitaloceanspaces.com"
-// DO_SPACE_ACCESS_KEY="DO0027J7KJDZWYGM3YH7"
-// DO_SPACE_SECRET_KEY="JgoBnFAbi/R/teVFdnDeY6MzDclRBO8BiUw9MOzVCAo"
-// DO_SPACE_BUCKET="freemanz"
+// DO_SPACE_ACCESS_KEY="DO00ZY38CBRVMJX47F6X"
+// DO_SPACE_SECRET_KEY="lBj/DMJHV/uP6way7FULDI0/kaVs+VoEbm6CBm1/78A"
+// DO_SPACE_BUCKET="azmabiomed"
+
 
 const DO_CONFIG = {
-  endpoint: "https://nyc3.digitaloceanspaces.com",
-  region: "nyc3",
+  endpoint: "https://sfo3.digitaloceanspaces.com",
+  region: "sfo3",
   credentials: {
-    accessKeyId: "DO0027J7KJDZWYGM3YH7",
-    secretAccessKey: "JgoBnFAbi/R/teVFdnDeY6MzDclRBO8BiUw9MOzVCAo",
+    accessKeyId: "DO00ZY38CBRVMJX47F6X",
+    secretAccessKey: "lBj/DMJHV/uP6way7FULDI0/kaVs+VoEbm6CBm1/78A",
   },
-  spaceName: "freemanz",
+  spaceName: "azmabiomed",
 };
 
 const s3Config: S3ClientConfig = {
