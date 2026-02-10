@@ -62,22 +62,22 @@ const sendCuoponToUser = async (data: sendCuopon) => {
 
         const expiryDate = coupon.expireDate;
         const formattedExpiry = `${expiryDate.getFullYear()}-${String(
-          expiryDate.getMonth() + 1
+          expiryDate.getMonth() + 1,
         ).padStart(2, "0")}-${String(expiryDate.getDate()).padStart(
           2,
-          "0"
+          "0",
         )} ${String(expiryDate.getHours()).padStart(2, "0")}:${String(
-          expiryDate.getMinutes()
+          expiryDate.getMinutes(),
         ).padStart(2, "0")}:${String(expiryDate.getSeconds()).padStart(
           2,
-          "0"
+          "0",
         )}`;
 
         await emailQueue.add("sendCoupon", {
           fullName: existingUser.firstName + " " + existingUser.lastName,
           couponCode: coupon.code,
           discountValue: coupon.discountValue,
-          discountType : coupon.discountType,
+          discountType: coupon.discountType,
           expiryDate: formattedExpiry,
           message: data.message,
           email: existingUser.email,
@@ -87,7 +87,7 @@ const sendCuoponToUser = async (data: sendCuopon) => {
       } catch (err) {
         console.error(`Error processing user ${userId}:`, err);
       }
-    })
+    }),
   );
 };
 
