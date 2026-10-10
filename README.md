@@ -1,4 +1,4 @@
-# 📦 Habib Logistics — Enterprise B2B Supply Chain & Freight API
+# 🌍 Habib — Cross-Border Multi-Country E-Commerce, International Logistics & Fulfillment API
 
 ![Architecture Banner](./assets/banner.svg)
 
@@ -17,8 +17,9 @@
   <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
   <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
   <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT_Auth" />
-  <img src="https://img.shields.io/badge/Logistics_API-3B82F6?style=for-the-badge&logo=truck&logoColor=white" alt="Logistics_API" />
+  <img src="https://img.shields.io/badge/BullMQ-FF4500?style=for-the-badge&logo=redis&logoColor=white" alt="BullMQ" />
+  <img src="https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
+  <img src="https://img.shields.io/badge/Cross_Border-0284C7?style=for-the-badge&logo=globe&logoColor=white" alt="Cross_Border" />
   
 </p>
 
@@ -26,17 +27,17 @@
 
 ## 📌 Executive Overview
 
-Habib Logistics is an end-to-end supply chain management backend that streamlines B2B procurement, freight tracking, warehouse dispatch, and supplier invoice reconciliation.
+**Habib Backend** is an international e-commerce and cross-border trade engine. Built on **Node.js, TypeScript, Express, Prisma ORM, BullMQ, and Redis**, the platform enables global merchant sales across multiple countries: **country-specific product catalogs and localized shipping rules**, multi-tier coupon promotion engine, webhook-verified Stripe checkout, asynchronous background worker queues for email dispatches, Puppeteer automated PDF invoice generation, and customer verified review moderation.
 
 ---
 
-## 🚀 Key Architectural Highlights
+## 🚀 Key Architectural & Domain Capabilities
 
-- **Shipment Tracking**: Real-time status milestones from warehouse pickup to final destination dispatch.
-- **Supplier Invoicing**: Automated multi-currency invoice calculation and payment status auditing.
-- **Role-Based Security**: Granular RBAC separating Logistics Coordinators, Suppliers, and Operations Admins.
-- **Data Integrity**: Prisma ORM schema enforcement and typed query contracts.
-- **Audit Logging**: Comprehensive activity history on all consignment status transitions.
+- **Multi-Country Regional Cataloging**: Localized country landing sections (`CountrySectionInfo`, `CountryCardInfo`) and territory delivery rules.
+- **Automated BullMQ Worker Architecture**: High-reliability Redis background workers handling asynchronous emails and fulfillment notifications.
+- **Headless Puppeteer Invoice Generation**: Programmatic generation of compliant international commercial invoices and shipping manifests.
+- **Stripe Payment Reconciliation**: Idempotent webhook listeners preventing duplicate order fulfillment or charge captures.
+- **Promotional Coupon Engine**: Flexible discount rules supporting percent/fixed deductions, country limits, and per-user redemption caps.
 
 ---
 
@@ -45,16 +46,18 @@ Habib Logistics is an end-to-end supply chain management backend that streamline
 The complete REST API specification is published in our public Postman showcase workspace:
 
 * 🌐 **Instant Live API Documentation**: [Explore habib-backend in Postman (Instant Web View)](https://www.postman.com/shahjalal-backend-9458759/shahjalal-api-portfolio/collection/48491387-39eca040-8125-45f8-bb17-c9b2f1c3b769)
-* 📁 **Local Postman File**: [`docs/postman_collection.json`](./docs/postman_collection.json) (import directly into Postman Desktop or Newman CLI).
+* 📁 **Local Postman File**: [`docs/postman_collection.json`](./docs/postman_collection.json) (ready for Postman Desktop or Newman CLI).
 
 ### Core Endpoint Modules
 
 | Module | Base Route | Key Capabilities |
 |---|---|---|
-| **Authentication** | `/api/v1/auth` | Corporate JWT authentication, role guards |
-| **Shipments** | `/api/v1/shipment` | Create consignments, dispatch manifests, status updates |
-| **Suppliers** | `/api/v1/supplier` | Vendor directory, SLA ratings, contact telemetry |
-| **Invoices** | `/api/v1/invoice` | Billing records, invoice approvals, payment confirmations |
+| **Authentication** | `/api/v1/auth` | Customer registration, passwordless OTP, JWT token refresh |
+| **Country Locations** | `/api/v1/countrylocations` | Regional territory configuration, country cards, localized content |
+| **Catalog & Brands** | `/api/v1/product` | Product catalog, multi-brand taxonomy, sku pricing, stock telemetry |
+| **Orders & Payments** | `/api/v1/orderpayment` | Checkout session creation, Stripe webhook reconciliation, fulfillment status |
+| **Coupon Engine** | `/api/v1/cuopon` | Discount code validation, usage quotas, promotional date windows |
+| **Reviews & Ratings** | `/api/v1/review` | Customer ratings, verified buyer review submissions, star aggregations |
 
 ---
 
@@ -63,18 +66,18 @@ The complete REST API specification is published in our public Postman showcase 
 ```plaintext
 habib-backend/
 ├── assets/
-│   └── banner.svg               # Project architecture visual banner
+│   └── banner.svg               # Architectural visual banner
 ├── docs/
 │   └── postman_collection.json  # Full Postman API collection v2.1
 ├── src/
 │   ├── app/
 │   │   ├── middlewares/         # Global error handlers, auth & validation guards
-│   │   ├── modules/             # Domain-driven feature modules
-│   │   └── routes/              # Centralized route aggregator
+│   │   ├── modules/             # Domain feature modules
+│   │   └── routes/              # Centralized route registration
 │   ├── config/                  # Environment & external service configurations
-│   └── server.ts                # Application bootstrapper & HTTP server
+│   └── server.ts                # Application bootstrapper
 ├── prisma/
-│   └── schema.prisma            # Database schema definition
+│   └── schema.prisma            # Prisma database schema definition
 ├── .env.example                 # Sanitized environment template
 ├── package.json
 └── tsconfig.json
@@ -95,13 +98,12 @@ cd habib-backend
 npm install
 ```
 
-### 2. Environment Configuration
-Copy the provided `.env.example` file to create your local `.env`:
+### 2. Configure Environment Variables
 ```bash
 cp .env.example .env
 ```
 
-### 3. Initialize Prisma Client
+### 3. Generate Prisma Client
 ```bash
 npx prisma generate
 ```
@@ -115,7 +117,7 @@ npm run dev
 
 ## 👨‍💻 Engineering & Authorship
 
-Developed and maintained by **Md. Shahjalal**.
+Developed and engineered by **Md. Shahjalal**.
 
 * **GitHub**: [@shahjalal-labs](https://github.com/shahjalal-labs)
 * **Email**: [muhommodshahjalal@gmail.com](mailto:muhommodshahjalal@gmail.com)
